@@ -1,7 +1,5 @@
-from fixture.group import GroupHelper
-from fixture.session import SessionHelper
-from fixture.contact import ContactHelper
 
+from fixture.session import SessionHelper
 from selenium import webdriver
 
 
@@ -27,7 +25,6 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        #if not (wd.current_url.endswith("index.php") > 0):
         wd.get(self.base_url)
 
 
