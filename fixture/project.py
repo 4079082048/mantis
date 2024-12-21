@@ -1,20 +1,15 @@
-from lib2to3.pgen2 import driver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from model.project import Project
-from model.group import Group
-import re
+
+
 __author__ = 'Sofia'
 
 
-class ProjectHelper():
+class ProjectHelper:
     def __init__(self, app):
         self.app = app
 
-    contact_cache = None
-    def create(self, new_project_data):
+    def create(self):
         # create Project
         wd = self.app.wd
         self.app.open_project_page()
@@ -30,12 +25,13 @@ class ProjectHelper():
         wd.find_element(By.XPATH, "//a[normalize-space(text())='Проекты']")
 
 
-
-
     def fill_project_data(self):
         wd = self.app.wd
-        self.change_filed_value("name", project.name)
-        self.change_filed_value("homepage", contact.homepage)
+        self.change_filed_value("name", )
+        self.change_filed_value("description",)
+        #self.change_filed_value("status", project.status)
+        #self.change_filed_value("inherit_global", project.inherit_global)
+        #self.change_filed_value("view_state", project.view_state)
 
     def change_filed_value(self, field_name, text):
         wd = self.app.wd
@@ -48,21 +44,6 @@ class ProjectHelper():
 
 
 
-    def add_contact_to_group(self, contact_id, group_id):
-        wd = self.app.wd
-        self.app.open_home_page()
-        wd.find_element(By.CSS_SELECTOR, 'input[id="%s"]' % contact_id).click()
-        wd.find_element(By.XPATH, '//select[@name="to_group"]/option[contains(@value, "%s")]' % group_id).click()
-        wd.find_element(By.XPATH, '//input[@value="Add to"]').click()
-
-    def del_contact_from_group(self, contact_id, group_id):
-        wd = self.app.wd
-        self.app.open_home_page()
-        wd.find_element(By.XPATH, '//select[@name="group"]/option[contains(@value, "%s")]' % group_id).click()
-        wd.find_element(By.CSS_SELECTOR, 'input[id="%s"]' % contact_id).click()
-        wd.find_element(By.XPATH, '//input[@name="remove"]').click()
-        self.cont_cache = None
-
 
     def username(self):
         wd = self.app.wd
@@ -72,4 +53,6 @@ class ProjectHelper():
         # return to main page
         wd = self.app.wd
         wd.find_element(By.LINK_TEXT, "home page").click()
+
+
 

@@ -56,4 +56,3 @@ class SessionHelper:
         wd = self.app.wd
         return wd.find_element(By.XPATH, '//*[@id="breadcrumbs"]/ul/li/a').text
     #or css selector
-

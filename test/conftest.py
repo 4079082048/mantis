@@ -1,6 +1,7 @@
 import json
 import importlib
 from fixture.application import Application
+
 import pytest
 import os.path
 
@@ -29,29 +30,6 @@ def app(request):
 
     return fixture
 
-'''
-
-@pytest.fixture(scope="session")
-def db(request):
-    db_config = load_config(request.config.getoption("--target"))['db']
-    dbfixture = DbFixture(host=db_config['host'], name=db_config['name'], user=db_config['user'], password=db_config['password'])
-    def fin():
-        dbfixture.destroy()
-    request.addfinalizer(fin)
-    return dbfixture '''
-
-'''@pytest.fixture(scope="session")
-def orm(request):
-    orm_config = load_config(request.config.getoption("--target"))["db"]
-    ormfixture = ORMFixture(host=orm_config['host'], name=orm_config['name'], user=orm_config['user'], password=orm_config['password'])
-    def fin():
-        ormfixture.destroy()
-    return ormfixture
-
-@pytest.fixture(scope="session")
-def check_ui(request):
-    return request.config.getoption("--check_ui")'''
-
 
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
@@ -79,6 +57,6 @@ def pytest_generate_tests(metafunc): #получить инфо о тест фу
 def load_from_module(module):
     return importlib.import_module("data.%s" % module).testdata #после импорта взять из модуля тестдата
 
-def load_from_json(file):
+def load_from_json(file, jsonpickle=None):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data/%s.json" % file)) as f_out:
         return jsonpickle.decode(f_out.read())

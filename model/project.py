@@ -14,12 +14,13 @@ class Project:
         return "%s:%s:%s" % (self.name, self.description, self.status)
 
 
-    #def __eq__(self, other):
-    #    return (self.id is None or other.id is None or self.id == other.id) and self.firstname == other.firstname and self.lastname == other.lastname
+    def __eq__(self, other):
+        return (self.name is None or other.name is None or self.name == other.name) and self.description == other.description and self.description == other.description
 
-        # return max id or max value
+
     def id_or_max(self):
             if self.name:
                 return int(self.name)
             else:
                 return maxsize
+
