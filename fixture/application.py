@@ -21,7 +21,7 @@ class Application:
         self.current_url = None
         self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
-        self.session = ProjectHelper(self)
+        self.project = ProjectHelper(self)
         self.base_url = baseUrl
         self.open_home_page()
 
