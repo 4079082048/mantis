@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 
 from data import project
 from model.project import Project
@@ -9,6 +9,7 @@ __author__ = 'Sofia'
 
 class ProjectHelper:
     def __init__(self, app):
+        self.project_cache = None
         self.app = app
 
 
@@ -25,6 +26,10 @@ class ProjectHelper:
         self.app.open_home_page()
         wd.find_element(By.XPATH, "//span[text()=' Управление ']").click()
         wd.find_element(By.XPATH, "//a[normalize-space(text())='Проекты']").click()
+        self.create_project_page()
+
+    def create_project_page(self):
+        wd = self.app.wd
         wd.find_element(By.XPATH, "//button[text()='Создать новый проект']").click()
 
 
@@ -47,8 +52,6 @@ class ProjectHelper:
 
 
 
-
-
     def username(self):
         wd = self.app.wd
         return "admin"
@@ -57,6 +60,22 @@ class ProjectHelper:
         # return to main page
         wd = self.app.wd
         wd.find_element(By.LINK_TEXT, "home page").click()
+
+    def get_project_list(self):
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_project_page()
+            self.project_cache = []
+            for element in wd.find_elements(By.NAME, "tr"):
+                cells = element.find_elements(By.TAG_NAME, "th")
+                name = cells[1].text
+                status = cells[2].text
+                #enabled = cells[3].text
+                #id = cells[0].find_element(By.NAME, "selected[]").get_attribute("value")
+                view_state =  cells[4].text
+                description =  cells[5].text
+                self.contact_cache.append(Project(name=name, status=status, view_state=view_state, description=description)) # enabled=enabled
+        return list(self.contact_cache)
 
 
 

@@ -10,6 +10,9 @@ project_name = f"NewPName{random_number}"
 project_desc = f"NewPD{random_number}"
 #
 def test_add_project(app):
+    old_projects = app.project.get_project_list()
     app.session.login("administrator", "root")
     app.project.open_project_page()
     app.project.create(Project(name=project_name, description=project_desc))
+    new_projects = app.project.get_project_list()
+    assert len(old_projects) == len(new_projects)
