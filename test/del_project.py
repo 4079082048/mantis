@@ -1,10 +1,5 @@
 from model.project import Project
-from fixture.project import ProjectHelper
 import random
-from model.project import Project
-from fixture.project import ProjectHelper
-import random
-from random import randrange
 
 
 def test_del_project(app):
@@ -17,9 +12,9 @@ def test_del_project(app):
         app.project.create(Project(name=f"tpN+{random}", description=f"tpD+{random}"))
     old_projects = app.project.get_project_list()  # Обновляем список проектов
     index = random.randrange(len(old_projects))
-    print('было = ', app.project.count_projects())
+    print('/n было = ', app.project.count_projects())
     app.project.delete_project(index)
-    print('стало = ', app.project.count_projects())
+    print('/n стало = ', app.project.count_projects())
     # Проверяем, что количество проектов уменьшилось на 1
     assert len(old_projects) - 1 == app.project.count_projects()
     new_projects = app.project.get_project_list()

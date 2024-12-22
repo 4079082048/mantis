@@ -1,15 +1,18 @@
+import pytest
+
 from model.project import Project
 from fixture.project import ProjectHelper
+from data.project import testdata
 
+@pytest.mark.parametrize("project", testdata)
+def test_add_project(app, project):
 
-def test_add_project(app, json_project):
-    project = json_project
     app.session.login("administrator", "root")
     app.project.open_project_page()
     old_projects = app.project.get_project_list()
-    print('было = ', app.project.count_projects())
+    print('/n было = ', app.project.count_projects())
     app.project.create(project)
-    print('стало = ', app.project.count_projects())
+    print('/n стало = ', app.project.count_projects())
     new_projects = app.project.get_project_list()
     assert len(old_projects) + 1 == app.project.count_projects()
     old_projects.append(project)
