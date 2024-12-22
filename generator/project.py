@@ -23,17 +23,17 @@ for o, a in opts:
         elif o == "-f":
             f = a
 
-
 def random_string(prefix, maxlen):
     symbols = string.ascii_letters + string.digits + string.punctuation
     return prefix + "".join([random.choice(symbols)
                              for i in range(random.randrange(maxlen))])
 
-testdata = [Project(name="", description="")] + [Project(name=random_string("=name=", 10), description=random_string("=description =", 20))
+
+testdata = [Project(name=random_string("=name1=", 10), description=random_string("=description1 =", 10))] + [Project(name=random_string("=name2=", 10), description=random_string("=description2 =", 10))
                                                      for i in range(n)]
 
-file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
 
+file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
 with open(file, "w") as f_out:
     jsonpickle.set_encoder_options("json", indent=2)
     f_out.write(jsonpickle.encode(testdata))

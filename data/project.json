@@ -1,16 +1,16 @@
 [
   {
     "py/object": "model.project.Project",
-    "name": "",
-    "description": "",
+    "name": "=name1=",
+    "description": "=description1 =:",
     "status": null,
     "inherit_global": null,
     "view_state": null
   },
   {
     "py/object": "model.project.Project",
-    "name": "=name=v%NOhv",
-    "description": "=description =l|A?*Ht#q",
+    "name": "=name2=H",
+    "description": "=description2 =T,y/b9okn",
     "status": null,
     "inherit_global": null,
     "view_state": null

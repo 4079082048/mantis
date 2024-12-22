@@ -6,10 +6,5 @@
     "username": "administrator",
     "password": "root"
   }
- /* "db": {
-  "host": "localhost",
-  "name":  "addressbook",
-  "user": "root",
-  "password": ""
-    }*/
+
 }

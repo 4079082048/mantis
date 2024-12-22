@@ -16,11 +16,10 @@ def test_del_project(app):
          #Создаем новый проект, если список пуст
         app.project.create(Project(name=f"tpN+{random}", description=f"tpD+{random}"))
     old_projects = app.project.get_project_list()  # Обновляем список проектов
-    print("Old projects:", old_projects)  # Для отладки
     index = random.randrange(len(old_projects))
-    print('was = ', app.project.count_projects())
+    print('было = ', app.project.count_projects())
     app.project.delete_project(index)
-    print('is = ', app.project.count_projects())
+    print('стало = ', app.project.count_projects())
     # Проверяем, что количество проектов уменьшилось на 1
     assert len(old_projects) - 1 == app.project.count_projects()
     new_projects = app.project.get_project_list()

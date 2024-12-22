@@ -32,7 +32,7 @@ class Application:
 
     def destroy(self):
         self.wd.quit()
-        #self.connection.close()
+
 
     def is_valid(self):
         try:
