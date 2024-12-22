@@ -5,6 +5,8 @@ import os.path
 import getopt
 import sys
 import jsonpickle
+import pytest
+from model.project import Project
 
 try:
     opts, args = getopt.getopt(sys.argv[1:], "n:f:", ["number of projects", "file"])
@@ -16,6 +18,7 @@ except getopt.GetoptError as err:
 
 n = 1
 f = "data/project.json"
+
 
 for o, a in opts:
         if o == "-n":

@@ -1,19 +1,15 @@
-import json
-import importlib
-from random import random
-import random
 from fixture.application import Application
-import jsonpickle
-
 import pytest
+import json
 import os.path
+import importlib
+import jsonpickle
+from fixture.session import SessionHelper
 
 
 
 fixture = None
 target = None
-
-
 
 
 def load_config(file):
@@ -48,7 +44,6 @@ def stop(request):
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="target.json")
-    #parser.addoption("--check_ui", action="store_true")
 
 
 def pytest_generate_tests(metafunc):
@@ -60,9 +55,9 @@ def pytest_generate_tests(metafunc):
             testdata = load_from_json(fixture[5:])
             metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
 
+
 def load_from_module(module):
     return importlib.import_module("data.%s" % module).testdata
-
 def load_from_json(file):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data/%s.json" % file)) as f_out:
         return jsonpickle.decode(f_out.read())
