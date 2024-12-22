@@ -1,6 +1,9 @@
 import json
 import importlib
+from random import random
+import random
 from fixture.application import Application
+import jsonpickle
 
 import pytest
 import os.path
@@ -9,6 +12,9 @@ import os.path
 
 fixture = None
 target = None
+
+
+
 
 def load_config(file):
     global target
@@ -45,8 +51,8 @@ def pytest_addoption(parser):
     #parser.addoption("--check_ui", action="store_true")
 
 
-def pytest_generate_tests(metafunc): #получить инфо о тест функции
-    for fixture in metafunc.fixturenames: #пробегаем по всем параметрам
+def pytest_generate_tests(metafunc):
+    for fixture in metafunc.fixturenames:
         if fixture.startswith("data_"):
             testdata = load_from_module(fixture[5:])
             metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
@@ -55,8 +61,8 @@ def pytest_generate_tests(metafunc): #получить инфо о тест фу
             metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
 
 def load_from_module(module):
-    return importlib.import_module("data.%s" % module).testdata #после импорта взять из модуля тестдата
+    return importlib.import_module("data.%s" % module).testdata
 
-def load_from_json(file, jsonpickle=None):
+def load_from_json(file):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data/%s.json" % file)) as f_out:
         return jsonpickle.decode(f_out.read())

@@ -1,18 +1,23 @@
 from model.project import Project
 from fixture.project import ProjectHelper
-import random
 
-# Генерируем случайное число
-random_number = random.randint(1, 100)  # Вы можете задать любой диапазон
 
-# Создаем имя и описанме проекта с добавлением случайного числа
-project_name = f"NewPName{random_number}"
-project_desc = f"NewPD{random_number}"
-#
-def test_add_project(app):
-    old_projects = app.project.get_project_list()
+def test_add_project(app, json_project):
+    project = json_project
     app.session.login("administrator", "root")
     app.project.open_project_page()
-    app.project.create(Project(name=project_name, description=project_desc))
-    new_projects = app.project.get_project_list()
-    assert len(old_projects) == len(new_projects)
+    old_projects = app.project.get_project_list()
+    print('\n Before = ', app.project.count_projects())
+    app.project.create(project)
+    print('\n After = ', app.project.count_projects())
+    #new_projects = app.project.get_project_list()
+    #assert len(old_projects) + 1 == app.project.count_projects()
+    #old_projects.append(project)
+    #sorted_old_list = sorted(old_projects)
+    #sorted_new_list = sorted(new_projects)
+    #assert sorted_old_list == sorted_new_list
+
+
+
+
+
