@@ -42,7 +42,7 @@ class ProjectHelper:
         #self.open_project_page()
         wd.find_elements(By.XPATH, '//a[contains(@href,"manage_proj_edit_page.php?project_id")]')[index].click()
         wd.find_element(By.XPATH,'//button[@formaction="manage_proj_delete.php"]').click()
-        #wd.find_elements(By.XPATH,'//input[@value="Delete Project"]').click()
+        wd.find_element(By.XPATH,'//input[@class="btn btn-primary btn-white btn-round"]').click()
         self.project_cache = None
 
 
