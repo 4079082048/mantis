@@ -24,3 +24,13 @@ class Project:
             else:
                 return maxsize
 
+    def name(self):
+        if self.name:
+            return str(self.name)
+
+    def name1(self):
+        return self._name  # Возвращаем имя проекта как строку
+
+
+
+
