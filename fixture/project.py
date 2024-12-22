@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from model.project import Project
+from random import randrange
 
 
 
@@ -36,9 +37,13 @@ class ProjectHelper:
         wd = self.app.wd
         self.open_project_page()
 
-    def delete_project(self):
+    def delete_project(self, index):
         wd = self.app.wd
-        self.open_project_page()
+        #self.open_project_page()
+        wd.find_elements(By.XPATH, '//a[contains(@href,"manage_proj_edit_page.php?project_id")]')[index].click()
+        wd.find_element(By.XPATH,'//button[@formaction="manage_proj_delete.php"]').click()
+        #wd.find_elements(By.XPATH,'//input[@value="Delete Project"]').click()
+        self.project_cache = None
 
 
     def create_project_page(self):
@@ -68,20 +73,17 @@ class ProjectHelper:
         wd = self.app.wd
         wd.find_element(By.LINK_TEXT, "home page").click()
 
-
-    def get_project_list(self,):
+    def get_project_list(self):
+        # Инициализация кэша, если он еще не инициализирован
         if self.project_cache is None:
-            wd = self.app.wd
             self.project_cache = []
-            for element in wd.find_elements(By.NAME, "tr"):
-                cells = element.find_elements(By.TAG_NAME, "th")
-                name = cells[1].text
-                status = cells[2].text
-                #id = cells[0].find_element(By.NAME, "selected[]").get_attribute("value")
-                view_state =  cells[4].text
-                description =  cells[5].text
-                self.project_cache.append(Project(name=name, status=status, view_state=view_state, description=description)) # enabled=enabled
-        return list(self.project_cache)
+        # Проверка, если кэш пустой, то заполняем его
+        if not self.project_cache:
+            wd = self.app.wd
+            for element in wd.find_elements(By.XPATH, '//a[contains(@href,"manage_proj_edit_page.php?project_id")]'):
+                text = element.text
+                self.project_cache.append(Project(name=text))
+        return self.project_cache  # Всегда возвращаем кэш проектов (пустой или заполненный)
 
     def count_projects(self):
         wd = self.app.wd
