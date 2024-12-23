@@ -3,8 +3,6 @@ import pytest
 import json
 import os.path
 import importlib
-import jsonpickle
-from fixture.session import SessionHelper
 import ftputil
 
 
@@ -21,7 +19,7 @@ def load_config(file):
             target = json.load(f)
     return target
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture
 def app(request, config):
     global fixture
     browser = request.config.getoption("--browser")
