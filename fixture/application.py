@@ -1,6 +1,8 @@
+from fixture.james import JamesHelper
 from fixture.project import ProjectHelper
 from fixture.session import SessionHelper
 from selenium import webdriver
+from fixture.james import JamesHelper
 
 
 
@@ -24,6 +26,7 @@ class Application:
         self.project = ProjectHelper(self)
         self.base_url = base_url
         self.open_home_page()
+        self.james =JamesHelper(self)
 
     def open_home_page(self):
         wd = self.wd
