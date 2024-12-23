@@ -14,7 +14,9 @@ target = None
 def load_config(file):
     global target
     if target is None:
-        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
+        #config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
+        config_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(file))), "resources",
+                                   "config_defaults_inc.php")
         with open(config_file) as f:
             target = json.load(f)
     return target
@@ -72,7 +74,7 @@ def install_server_configuration(host, username, password):
         if remote.path.isfile("config_defaults_inc.php"):
             remote.rename("config_defaults_inc.php", "config_defaults_inc.php.bak")
         remote.upload(os.path.join(os.path.dirname(__file__), "resources/config_defaults_inc.php"), "config_defaults_inc.php")
-
+        #config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
 def restore_server_configuration(host, username, password):
     with ftputil.FTPHost(host, username, password) as remote:
         if remote.path.isfile("config_defaults_inc.php.bak"):
