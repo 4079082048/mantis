@@ -11,15 +11,30 @@ fixture = None
 target = None
 
 
+#def load_config(file):
+#    global target
+#    if target is None:
+#        #config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
+#        config_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(file))), "resources",
+#                           "config_inc.php")
+#        with open(config_file) as f:
+#            target = json.load(f)
+#   return target
 def load_config(file):
     global target
     if target is None:
-        #config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
         config_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(file))), "resources",
-                                   "config_defaults_inc.php")
+                                   "config_inc.php")
+        if not os.path.exists(config_file):
+            raise FileNotFoundError(f"Файл конфигурации не найден: {config_file}")
         with open(config_file) as f:
+            # Предполагается, что файл в формате JSON
             target = json.load(f)
     return target
+
+
+
+
 
 @pytest.fixture(scope="session")
 def config(request):
@@ -29,14 +44,9 @@ def config(request):
 def app(request, config):
     global fixture
     browser = request.config.getoption("--browser")
-    #web_config = load_config(request.config.getoption("--target"))["web"]
-    #web_config_user = load_config(request.config.getoption("--target"))["web_admin"]
     if fixture is None or not fixture.is_valid():
-        fixture = Application(browser=browser, config=config)  #?web_admin ? fixture = Application(browser=browser, base_url=config['web']['baseUrl'])
-    #fixture.session.ensure_login(username=web_config_user['username'], password=web_config_user['password'])
+        fixture = Application(browser=browser, config=config)
     return fixture
-
-
 
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
@@ -69,17 +79,17 @@ def configure_server(request, config):
 
 def install_server_configuration(host, username, password):
     with ftputil.FTPHost(host, username, password) as remote:
-        if remote.path.isfile("config_defaults_inc.php.bak"):
-            remote.remove("config_defaults_inc.php.bak")
-        if remote.path.isfile("config_defaults_inc.php"):
-            remote.rename("config_defaults_inc.php", "config_defaults_inc.php.bak")
-        remote.upload(os.path.join(os.path.dirname(__file__), "resources/config_defaults_inc.php"), "config_defaults_inc.php")
+        if remote.path.isfile("config_inc.php.bak"):
+            remote.remove("config_inc.php.bak")
+        if remote.path.isfile("config_inc.php"):
+            remote.rename("config_inc.php", "config_inc.php.bak")
+        remote.upload(os.path.join(os.path.dirname(__file__), "resources/config_inc.php"), "config_inc.php")
         #config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
 def restore_server_configuration(host, username, password):
     with ftputil.FTPHost(host, username, password) as remote:
-        if remote.path.isfile("config_defaults_inc.php.bak"):
-            if remote.path.isfile("config_defaults_inc.php"):
-                remote.remove("config_defaults_inc.php")
-            remote.rename("config_defaults_inc.php.bak", "config_defaults_inc.php")
+        if remote.path.isfile("config_inc.php.bak"):
+            if remote.path.isfile("config_inc.php"):
+                remote.remove("config_inc.php")
+            remote.rename("config_inc.php.bak", "config_inc.php")
 
 
