@@ -2,7 +2,7 @@
   "web": {
     "baseUrl": "http://localhost/mantisbt-2.26.4"
   },
-    "webadmin": {
+    "web_admin": {
     "username": "administrator",
     "password": "root"
   }

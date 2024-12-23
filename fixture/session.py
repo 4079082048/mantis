@@ -27,7 +27,7 @@ class SessionHelper:
         wd = self.app.wd
         # Ожидание появления элемента "Logout"
         wd.find_element(By.LINK_TEXT, "Logout").click()
-        wd.find_element(By.NAME, "user").click()
+        wd.find_element(By.NAME, "username").click()
 
     def ensure_logout(self):
         wd =self.app.wd

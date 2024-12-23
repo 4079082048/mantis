@@ -3,7 +3,6 @@ import random
 
 
 def test_del_project(app):
-    app.session.login("administrator", "root")
     app.project.open_project_page()
     old_projects = app.project.get_project_list()
      #Проверяем, есть ли проекты в списке
