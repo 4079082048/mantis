@@ -19,6 +19,10 @@ def load_config(file):
             target = json.load(f)
     return target
 
+@pytest.fixture(scope="session")
+def config(request):
+    return load_config(request.config.getoption("--target"))
+
 @pytest.fixture
 def app(request, config):
     global fixture
@@ -30,9 +34,7 @@ def app(request, config):
     #fixture.session.ensure_login(username=web_config_user['username'], password=web_config_user['password'])
     return fixture
 
-@pytest.fixture(scope="session")
-def config(request):
-    return load_config(request.config.getoption("--target"))
+
 
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
