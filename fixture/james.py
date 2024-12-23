@@ -5,7 +5,9 @@ class JamesHelper:
         self.app = app
 
     def ensure_user_exists(self, username, password):
-        session = JamesHelper.Session("localhost", 4555, "root", "root")
+        james_config = self.app.config['james']
+        session = JamesHelper.Session(
+            james_config['host'], james_config['4555'], james_config['username'], james_config['root'])
         if session.is_users_registered(username):
             session.reset_password(username, password)
         else:
