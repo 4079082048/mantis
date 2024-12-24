@@ -23,8 +23,8 @@ def load_config(file):
     if target is None:
         config_file = os.path.join(os.path.dirname(os.path.abspath(file)), file)
         #config_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(file))), "target.json")
-        #with (open(config_file) as f):
-        #    target = json.load(f)
+        with (open(config_file) as f):
+            target = json.load(f)
     return target
 
 @pytest.fixture(scope="session")
@@ -77,11 +77,11 @@ def install_server_configuration(host, username, password):
             remote.remove("config_inc.php.bak")
         if remote.path.isfile("config_inc.php"):
             remote.rename("config_inc.php", "config_inc.php.bak")
-        remote.upload(os.path.join(os.path.dirname(__file__), "resources/config_inc.php"), "config_inc.php")
-        #remote.upload(os.path.join(os.path.dirname(__file__),'..','resources/config_inc.php'), 'config_inc.php')
-        #remote.upload(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'resources/config_inc.php'),
-         #             'config_inc.php')
-
+        #remote.upload(os.path.join(os.path.dirname(__file__), "resources/config_inc.php"), "config_inc.php")
+        # Путь к файлу config_inc.php
+        file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "resources/config_inc.php")
+        # Загрузка файла на сервер
+        remote.upload(file_path, "config_inc.php")
 
 def restore_server_configuration(host, username, password):
     with ftputil.FTPHost(host, username, password) as remote:
