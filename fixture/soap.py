@@ -1,6 +1,5 @@
 from urllib.request import localhost
-
-from suds import Client
+from suds.client import Client
 from suds import WebFault
 
 class SoapHelper:

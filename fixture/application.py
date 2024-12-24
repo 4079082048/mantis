@@ -4,7 +4,7 @@ from selenium import webdriver
 from fixture.james import JamesHelper
 from fixture.signup import SignupHelper
 from fixture.mail import MailHelper
-from soap import SoapHelper
+from fixture.soap import SoapHelper
 
 __author__ = 'Sofia'
 
