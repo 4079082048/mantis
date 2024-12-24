@@ -25,12 +25,11 @@ def config(request):
     return load_config(request.config.getoption("--target"))
 
 
-@pytest.fixture
+@pytest.fixture(scope="session", autouse=True)
 def app(request, config):
     global fixture
     browser = request.config.getoption("--browser")
     if fixture is None or not fixture.is_valid():
-        #fixture = Application(browser=browser, base_url= config['web']['baseUrl'] )#config=config
         fixture = Application(browser=browser, config=config)
     return fixture
 

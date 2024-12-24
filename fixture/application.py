@@ -1,11 +1,9 @@
-from fixture.james import JamesHelper
 from fixture.project import ProjectHelper
 from fixture.session import SessionHelper
 from selenium import webdriver
 from fixture.james import JamesHelper
 
 __author__ = 'Sofia'
-
 
 class Application:
     def __init__(self, browser, config): #(self)
