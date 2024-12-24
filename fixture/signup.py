@@ -7,21 +7,28 @@ class SignupHelper:
 
     def new_user(self, username, email, password):
         wd = self.app.wd
-        wd.get(self.app.baseUrl + "/signup_page.php")
+        wd.get(self.app.base_url + "/signup_page.php")
         wd.find_element(By.NAME, "username").send_keys(username)
         wd.find_element(By.NAME, "email").send_keys(email)
         wd.find_element(By.CSS_SELECTOR, 'input[type="submit"]').click()
 
-        mail = self.app.mail.get_email("")
+        mail = self.app.mail.get_mail(username, password, "[MantisBT] Account registration")
         url = self.extract_confirmation_url(mail)
 
         wd.get(url)
         wd.find_element(By.NAME, "password").send_keys(password)
-        wd.find_element(By.NAME, "password").send_keys(password)
-        wd.find_element(By.CSS_SELECTOR, 'input[type="submit"]').click()
+        wd.find_element(By.NAME, "password_confirm").send_keys(password)
+        wd.find_element(By.CSS_SELECTOR, 'input[value="Update User"]').click()
+
+    #def extract_confirmation_url(self, text):
+    #    re.search("http://.*$", text, re.MULTILINE).group(0)
 
     def extract_confirmation_url(self, text):
-        re.search("http://.*$", text).group(0)
+        match = re.search("http://.*$", text, re.MULTILINE)
+        if match:
+            return match.group(0)
+        else:
+            raise ValueError("Confirmation URL not found in the email text.")
 
 
 
