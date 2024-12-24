@@ -24,13 +24,17 @@ def load_config(file):
 def config(request):
     return load_config(request.config.getoption("--target"))
 
+
 @pytest.fixture
 def app(request, config):
     global fixture
     browser = request.config.getoption("--browser")
     if fixture is None or not fixture.is_valid():
+        #fixture = Application(browser=browser, base_url= config['web']['baseUrl'] )#config=config
         fixture = Application(browser=browser, config=config)
     return fixture
+
+
 
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
@@ -68,7 +72,8 @@ def install_server_configuration(host, username, password):
         if remote.path.isfile("config_inc.php"):
             remote.rename("config_inc.php", "config_inc.php.bak")
         remote.upload(os.path.join(os.path.dirname(__file__), "resources/config_inc.php"), "config_inc.php")
-        #config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
+
+
 def restore_server_configuration(host, username, password):
     with ftputil.FTPHost(host, username, password) as remote:
         if remote.path.isfile("config_inc.php.bak"):

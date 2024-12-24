@@ -4,13 +4,11 @@ from fixture.session import SessionHelper
 from selenium import webdriver
 from fixture.james import JamesHelper
 
-
-
 __author__ = 'Sofia'
 
 
 class Application:
-    def __init__(self, browser, base_url): #(self)
+    def __init__(self, browser, config): #(self)
         if browser == "firefox":
             self.wd = webdriver.Firefox()
         elif browser == "chrome":
