@@ -7,7 +7,7 @@ class JamesHelper:
     def ensure_user_exists(self, username, password):
         james_config = self.app.config['james']
         session = JamesHelper.Session(
-            james_config['host'], james_config['4555'], james_config['username'], james_config['root'])
+            james_config['host'], james_config['port'], james_config['username'], james_config['password']) #проверить
         if session.is_users_registered(username):
             session.reset_password(username, password)
         else:
@@ -31,8 +31,8 @@ class JamesHelper:
             self.telnet.read_until(text.encode('ascii'), 5)
 
         def is_users_registered(self, username):
-            self.write("verify %\n" % username)
-            res = self.telnet.expect([b"exists", b"does_not_exist"])
+            self.write("verify %s\n" % username)
+            res = self.telnet.expect([b"exists", b"does not exist"])
             return res[0] == 0
 
         def create_user(self, username, password):
