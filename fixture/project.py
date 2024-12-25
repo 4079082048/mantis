@@ -85,6 +85,7 @@ class ProjectHelper:
                 self.project_cache.append(Project(name=text))
         return self.project_cache  # Всегда возвращаем кэш проектов (пустой или заполненный)
 
+
     def count_projects(self):
         wd = self.app.wd
         self.open_project_page()

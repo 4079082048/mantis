@@ -1,6 +1,6 @@
-
 import poplib
 import email
+import quopri
 import time
 
 
@@ -16,13 +16,17 @@ class MailHelper:
             num = pop.stat()[0]
             if num > 0:
                 for n in range(num):
-                    msglines = pop.retr(n+1)[1]
-                    msgtext = "\n".join(map(lambda  x: x.decode('utf-8'), msglines))
+                    msglines = pop.retr(n + 1)[1]
+                    msgtext = '\n'.join(map(lambda x: x.decode('utf-8'), msglines))
                     msg  = email.message_from_string(msgtext)
-                    if msg.get("Subject") == subject:
+                    subject = msg.get('Subject')  # Сохраняем результат в переменную subject
+                    # Выводим значение переменной subject на печать
+                    print(subject)
+                    if msg.get('Subject') == subject:
                         pop.dele(n+1)
                         pop.quit()
-                        return msg.get_payload()
+                        return quopri.decodestring(msg.get_payload()).decode('utf-8')
+
             pop.quit()
-            time.sleep(3)
+            time.sleep(10)
         return None
