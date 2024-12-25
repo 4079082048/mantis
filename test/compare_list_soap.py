@@ -5,7 +5,6 @@ from data.project import testdata
 
 @pytest.mark.parametrize("project", testdata)
 def test_compare_list_soap(app, project):
-    #app.session.login("administrator", "root")
     app.project.open_project_page()
     old_projects = app.project.get_project_soap_list()
     print('/n было = ', app.project.count_projects())
