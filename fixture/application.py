@@ -35,6 +35,9 @@ class Application:
     def open_home_page(self):
         wd = self.wd
         wd.get(self.base_url)
+        #username = config["web_admin"]['username']
+        #password = config["web_admin"]['password']
+        #app.session.login("administrator", "root")
 
 
     def destroy(self):

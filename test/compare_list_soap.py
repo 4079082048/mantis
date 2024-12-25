@@ -6,10 +6,11 @@ from model.project import Project
 
 @pytest.mark.parametrize("project", testdata)
 def test_compare_list_soap(app, project, config):
-
+ #надо вынести куда-то в тесты отдельно, но сил уже нет
     username = config["web_admin"]['username']
     password = config["web_admin"]['password']
     app.session.login("administrator", "root")
+
     app.project.open_project_page()
     old_projects = app.soap.get_project_soap_list(username, password)
     app.project.create(project)
