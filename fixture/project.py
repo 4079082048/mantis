@@ -23,14 +23,14 @@ class ProjectHelper:
 
     def submit_creation(self):
         wd = self.app.wd
-        wd.find_element(By.XPATH, '//input[@value="Добавить проект"]').click()
+        wd.find_element(By.XPATH, '//input[@class="btn btn-primary btn-white btn-round"]').click()
 
 
     def open_project_page(self):
         wd = self.app.wd
-        self.app.open_home_page()
-        wd.find_element(By.XPATH, "//span[text()=' Управление ']").click()
-        wd.find_element(By.XPATH, "//a[normalize-space(text())='Проекты']").click()
+        #self.app.open_home_page()
+        wd.find_element(By.XPATH, "//a[@href='/mantisbt-2.26.4/manage_overview_page.php']").click()
+        wd.find_element(By.XPATH, "//a[normalize-space(text())='Projects']").click()
 
 
     def select_project(self):
@@ -48,7 +48,7 @@ class ProjectHelper:
 
     def create_project_page(self):
         wd = self.app.wd
-        wd.find_element(By.XPATH, "//button[text()='Создать новый проект']").click()
+        wd.find_element(By.XPATH, "//button[@class='btn btn-primary btn-white btn-round']").click()
 
 
     def fill_project_data(self, new_project):
