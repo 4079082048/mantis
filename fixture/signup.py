@@ -13,7 +13,11 @@ class SignupHelper:
         wd.find_element(By.CSS_SELECTOR, 'input[type="submit"]').click()
 
         mail = self.app.mail.get_mail(username, password, "") #"Mantis Bug Tracker"
+        print("Received mail:", mail)  # Вывод содержимого почты для отладки 1111111
         url = self.extract_confirmation_url(mail)
+
+        if url is None:
+            raise ValueError("Confirmation URL not found in the email.") #11111
         wd.get(url)
 
         wd.find_element(By.NAME, "password").send_keys(password)
@@ -23,8 +27,9 @@ class SignupHelper:
     def extract_confirmation_url(self, text):
         if text is None:
             return None  # Возвращаем None, если текст не задан
-        #match = re.search(r"http://[^s]*", text)
-        match = re.search(r'//localhost[^s]*"', text)
+        #№match = re.search(r'//localhost[^s]*"', text)
+        match = re.search(r'(https?://localhost[^"]*)', text)
+
         return match.group(0) if match else None
 
     #def extract_confirmation_url(self, text):
