@@ -9,7 +9,6 @@ class SignupHelper:
         wd = self.app.wd
         wd.get(self.app.base_url + "/signup_page.php")
         wd.find_element(By.NAME, "username").send_keys(username)
-        #wd.find_element(By.XPATH, '//@input[@value=Вход"]').click()
         wd.find_element(By.NAME, "email").send_keys(email)
         wd.find_element(By.CSS_SELECTOR, 'input[type="submit"]').click()
 
@@ -20,10 +19,6 @@ class SignupHelper:
         wd.find_element(By.NAME, "password").send_keys(password)
         wd.find_element(By.NAME, "password_confirm").send_keys(password)
         wd.find_element(By.CSS_SELECTOR, 'input[value="Update User"]').click()
-
-    #def extract_confirmation_url3(self, text):
-    #   re.search("http://.*$", text, re.MULTILINE).group(0)
-    #   re.search("//localhost.*$", text, re.MULTILINE).group(0)
 
     def extract_confirmation_url(self, text):
         if text is None:
@@ -42,3 +37,6 @@ class SignupHelper:
 
 
 
+     #def extract_confirmation_url3(self, text):
+        #   re.search("http://.*$", text, re.MULTILINE).group(0)
+        #   re.search("//localhost.*$", text, re.MULTILINE).group(0)
