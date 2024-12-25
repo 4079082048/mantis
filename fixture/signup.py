@@ -11,6 +11,10 @@ class SignupHelper:
         wd.find_element(By.NAME, "username").send_keys(username)
         wd.find_element(By.NAME, "email").send_keys(email)
         wd.find_element(By.CSS_SELECTOR, 'input[type="submit"]').click()
+        import time
+
+        # После отправки формы
+        time.sleep(5)  # Задержка в 5 секунд
 
         mail = self.app.mail.get_mail(username, password, "") #"Mantis Bug Tracker"
         print("Received mail:", mail)  # Вывод содержимого почты для отладки 1111111
@@ -27,8 +31,9 @@ class SignupHelper:
     def extract_confirmation_url(self, text):
         if text is None:
             return None  # Возвращаем None, если текст не задан
-        #№match = re.search(r'//localhost[^s]*"', text)
-        match = re.search(r'(https?://localhost[^"]*)', text)
+        #match = re.search(r'//localhost[^s]*"', text)
+        #match = re.search(r'(https?://localhost[^"]*)', text)
+        match = re.search(r'(//localhost/mantisbt-2.26.4[^"]*)', text)
 
         return match.group(0) if match else None
 
