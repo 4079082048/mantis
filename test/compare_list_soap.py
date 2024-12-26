@@ -1,5 +1,4 @@
 import pytest
-from typing_extensions import Counter
 from data.project import testdata
 from model.project import Project
 
